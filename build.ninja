@@ -1,0 +1,18 @@
+cxxflags = -Wall -Werror -pedantic -std=c++11 -ggdb -Iinclude
+lflags = -Wall -Werror  -pedantic -lsfml-window -lsfml-graphics -lsfml-system -lsfml-audio -ggdb
+
+rule cxx
+  command = g++ $cxxflags -c $in -o $out
+rule link
+  command = g++ $lflags $in -o $out
+
+build obj/main.o: cxx src/main.cpp
+build obj/game.o: cxx src/game.cpp
+build obj/resources.o: cxx src/resources.cpp
+build obj/entity/entity.o: cxx src/entity/entity.cpp
+build obj/entity/projectile.o: cxx src/entity/projectile.cpp
+build obj/entity/mrpop.o: cxx src/entity/mrpop.cpp
+
+build invador: link obj/main.o obj/game.o obj/resources.o obj/entity/entity.o obj/entity/projectile.o obj/entity/mrpop.o
+
+default invador
