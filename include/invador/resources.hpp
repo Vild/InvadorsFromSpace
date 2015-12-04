@@ -5,7 +5,7 @@
 
 enum class Textures {
 	PROJECTILE = 0,
-	MRPOP,
+	TESTGUY,
 
 	NUM_OF_TEXTURES
 };

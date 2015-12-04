@@ -1,10 +1,11 @@
 #include <invador/game.hpp>
 
 #include <invador/entity/projectile.hpp>
-#include <invador/entity/mrpop.hpp>
+#include <invador/entity/testguy.hpp>
 
-Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!") {
-	addEntity(new MrPop(this, vec2(window.getSize().x/2, window.getSize().y/2)));
+Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), renderView(sf::FloatRect(0, 0, 1000, 1000)) {
+	window.setView(renderView);
+	addEntity(new TestGuy(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 }
 
 Game::~Game() {
@@ -15,7 +16,6 @@ Game::~Game() {
 int Game::mainLoop() {
 	sf::Clock clock;
 
-	window.setView(sf::View(sf::FloatRect(0, 0, 1000, 1000)));
 	while (window.isOpen()) {
 		sf::Time elapsed = clock.restart();
 		delta = elapsed.asSeconds();
@@ -25,8 +25,17 @@ int Game::mainLoop() {
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
-			else if (event.type == sf::Event::Resized)
-				window.setView(sf::View(sf::FloatRect(0, 0, 1000, 1000)));
+			else if (event.type == sf::Event::Resized) {
+
+				double scalew = event.size.width / 1000.0;
+				double scaleh = event.size.height / 1000.0;
+				double scale = scalew < scaleh ? scalew : scaleh;
+
+				//renderView.setZoom(scale);
+				//renderView.setSize(event.size.width/**scale*/, event.size.height/**scale*/);
+				renderView.setViewport(sf::FloatRect(0, 0, scale, scale));
+				window.setView(renderView);
+			}
 		}
 
 		for (unsigned int i = 0; i < entities.size(); i++) {
