@@ -1,10 +1,7 @@
 cxxflags = -Wall -Werror -pedantic -std=c++11 -ggdb -Iinclude
 lflags = -Wall -Werror  -pedantic -lsfml-window -lsfml-graphics -lsfml-system -lsfml-audio -ggdb
 
-rule cxx
-  command = g++ $cxxflags -c $in -o $out
-rule link
-  command = g++ $lflags $in -o $out
+include cc.ninja
 
 build obj/main.o: cxx src/main.cpp
 build obj/game.o: cxx src/game.cpp

@@ -1,0 +1,10 @@
+rule cxx
+  command = g++ $cxxflags -c $in -o $out
+rule link
+  command = g++ $lflags $in -o $out
+
+# Uncommment to build for windows
+#rule cxx
+#  command = x86_64-w64-mingw32-g++ -c $in $cxxflags -o $out
+#rule link
+#  command = x86_64-w64-mingw32-g++ $in $lflags -o $out
