@@ -5,13 +5,14 @@
 
 class Projectile : public Entity {
 public:
-	Projectile(Game * game, vec2 pos, vec2 velocity);
+	Projectile(Game * game, vec2 pos, vec2 velocity, double rotate);
 	virtual ~Projectile();
 
 	void update(Game * game);
 	bool isHit(vec2 pos);
 private:
 	vec2 velocity;
+	double rotate;
 };
 
 #endif

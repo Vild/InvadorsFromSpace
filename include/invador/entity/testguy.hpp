@@ -10,8 +10,6 @@ public:
 
 	void update(Game * game);
 	bool isHit(vec2 pos);
-private:
-	vec2 velocity;
 };
 
 #endif

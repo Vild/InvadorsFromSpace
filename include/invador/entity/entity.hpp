@@ -24,6 +24,7 @@ public:
 
 	sf::Texture & getTexture();
 	sf::Sprite & getSprite();
+	virtual double getScale() const;
 private:
 	bool dead;
 	vec2 pos;

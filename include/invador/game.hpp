@@ -25,11 +25,13 @@ public:
 
 private:
 	sf::RenderWindow window;
-	sf::View renderView;
 	std::vector<Entity *> entities;
 	Resources resources;
 	double delta;
 	double time;
+	sf::View renderView;
+
+	void recalcView();
 };
 
 #endif

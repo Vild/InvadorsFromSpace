@@ -3,7 +3,9 @@
 #include <invador/game.hpp>
 
 Entity::Entity(sf::Texture & texture, vec2 pos, int textureGrid) : dead(false), pos(pos), offset(0, 0), texture(texture), textureGrid(textureGrid) {
+	texture.setSmooth(false);
 	sprite.setTexture(texture);
+	sprite.setScale(sf::Vector2f(getScale(), getScale()));
 	setFrame(0);
 }
 
@@ -44,4 +46,8 @@ sf::Texture & Entity::getTexture() {
 
 sf::Sprite & Entity::getSprite() {
 	return sprite;
+}
+
+double Entity::getScale() const {
+	return 10.0;
 }

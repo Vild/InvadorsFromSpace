@@ -1,11 +1,15 @@
 #include <invador/game.hpp>
 
 #include <invador/entity/projectile.hpp>
+#include <invador/entity/background.hpp>
 #include <invador/entity/testguy.hpp>
+#include <invador/entity/mrbob.hpp>
 
-Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), renderView(sf::FloatRect(0, 0, 1000, 1000)) {
-	window.setView(renderView);
+Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!") {
+	recalcView();
+	addEntity(new Background(this));
 	addEntity(new TestGuy(this, vec2(window.getSize().x/2, window.getSize().y/2)));
+	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 }
 
 Game::~Game() {
@@ -26,15 +30,7 @@ int Game::mainLoop() {
 			if (event.type == sf::Event::Closed)
 				window.close();
 			else if (event.type == sf::Event::Resized) {
-
-				double scalew = event.size.width / 1000.0;
-				double scaleh = event.size.height / 1000.0;
-				double scale = scalew < scaleh ? scalew : scaleh;
-
-				//renderView.setZoom(scale);
-				//renderView.setSize(event.size.width/**scale*/, event.size.height/**scale*/);
-				renderView.setViewport(sf::FloatRect(0, 0, scale, scale));
-				window.setView(renderView);
+				recalcView();
 			}
 		}
 
@@ -47,9 +43,12 @@ int Game::mainLoop() {
 			}
 		}
 
-		window.clear(sf::Color(25, 80, 25, 255));
-		for (unsigned int i = 0; i < entities.size(); i++)
+		window.clear(sf::Color(0, 0, 0, 255));
+		for (unsigned int i = 0; i < entities.size(); i++) {
+			window.setView(renderView);
 			entities[i]->render(this);
+		}
+
 		window.display();
 	}
 	return 0;
@@ -73,4 +72,15 @@ sf::RenderWindow & Game::getWindow() {
 
 Resources & Game::getResources() {
 	return resources;
+}
+
+void Game::recalcView() {
+	int newW = (1000*window.getSize().x)/window.getSize().y;
+	int newH = (1000*window.getSize().y)/window.getSize().x;
+	int displaceW = (newW - 1000)/(-2);
+	int displaceH = (newH - 1000)/(-2);
+	if (displaceW < displaceH)
+		renderView = sf::View(sf::FloatRect(displaceW, 0, newW, 1000));
+	else
+		renderView = sf::View(sf::FloatRect(0, displaceH, 1000, newH));
 }

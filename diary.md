@@ -4,7 +4,6 @@
 
 * Started with entity system
 
-
 ## 30/11 - 3h
 
 * Did some refactoring
@@ -18,3 +17,9 @@
 * Added a entity list in game
 * Added a resource manager
 * Bug fixes
+
+## 4/12 - 4h
+
+* Fixed aspect ration of rendering
+* Added scrolling background
+* Added a moveable and shooting player

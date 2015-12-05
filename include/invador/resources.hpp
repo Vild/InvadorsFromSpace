@@ -4,8 +4,10 @@
 #include <SFML/Graphics.hpp>
 
 enum class Textures {
-	PROJECTILE = 0,
-	TESTGUY,
+	Background = 0,
+	Projectile,
+	TestGuy,
+	MrBob,
 
 	NUM_OF_TEXTURES
 };
