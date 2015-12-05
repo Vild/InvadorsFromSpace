@@ -5,7 +5,7 @@
 #include <invador/entity/testguy.hpp>
 #include <invador/entity/mrbob.hpp>
 
-Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!") {
+Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), delta(0), time(0) {
 	recalcView();
 	addEntity(new Background(this));
 	addEntity(new TestGuy(this, vec2(window.getSize().x/2, window.getSize().y/2)));
