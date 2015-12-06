@@ -12,6 +12,10 @@ public:
 	void update(Game * game);
 	bool isHit(vec2 pos);
 	double getScale() const;
+private:
+	sf::RectangleShape block;
+	sf::Shader * shader;
+	vec2 offset;
 };
 
 #endif

@@ -22,6 +22,7 @@ public:
 
 	sf::RenderWindow & getWindow();
 	Resources & getResources();
+	bool getActive();
 
 private:
 	sf::RenderWindow window;
@@ -30,6 +31,8 @@ private:
 	double delta;
 	double time;
 	sf::View renderView;
+	bool windowActive;
+	sf::RectangleShape blockedViews[4];
 
 	void recalcView();
 };
