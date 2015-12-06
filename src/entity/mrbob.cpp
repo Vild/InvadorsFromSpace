@@ -15,30 +15,37 @@ void MrBob::update(Game * game) {
 	const double speed = 600;
 	double d = game->getDelta();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		getPos().y -= d * speed;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		getPos().y += d * speed;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		getPos().x -= d * speed;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		getPos().x += d * speed;
-
 	stateIdx += d * 8;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && state != BobState::Shooting) {
-		state = BobState::Shooting;
-		stateIdx = 0;
+	if (game->getActive()) {
+		auto & x = getPos().x;
+		auto & y = getPos().y;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
+				sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			y -= d * speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
+			sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			y += d * speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
+			sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			x -= d * speed;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
+			sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			x += d * speed;
 
-		vec2 spawnPos = getPos() + getOffset();
-		spawnPos.y -= getTexture().getSize().y * getScale()/8;
-		spawnPos.x = (int)spawnPos.x;
-		spawnPos.y = (int)spawnPos.y;
-		game->addEntity(new Projectile(game, spawnPos, vec2(0, -400), 180));
+		 x = fmax(0, fmin(x, 1000 - (16 * getScale())));
+		 y = fmax(0, fmin(y, 1000 - (16 * getScale())));
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && state != BobState::Shooting) {
+			state = BobState::Shooting;
+			stateIdx = 0;
+
+			vec2 spawnPos = getPos() + getOffset();
+			spawnPos.y -= getTexture().getSize().y * getScale() / 8;
+			spawnPos.x = (int)spawnPos.x;
+			spawnPos.y = (int)spawnPos.y;
+			game->addEntity(new Projectile(game, spawnPos, vec2(0, -400), 180));
+		}
 	}
 
 	if (state == BobState::Shooting && stateIdx >= 4) {
