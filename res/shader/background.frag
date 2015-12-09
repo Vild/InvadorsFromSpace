@@ -2,20 +2,20 @@ uniform vec2 offset;
 
 float x;
 float y;
+float d;
+float rx;
+float ry;
+float randRes;
 
 float rand(vec2 seed);
 
 float hasStar() {
-	float d = 10.0;
-	float rx = round(x / d);
-	float ry = round(y / d);
-
-	if (rand(vec2(rx, ry)) > 0.99) {
+	if (randRes > 0.95) {
 		float cx = rx * d;
 		float cy = ry * d;
 
 		float r = sqrt(pow(x - cx, 2) + pow(y - cy, 2));
-		return 1.0 - ((r * 2) / d);
+		return 1.0 - ((r * 2.0) / d);
 	}
 	return 0.0;
 }
@@ -26,13 +26,24 @@ vec4 starColor() {
 		abs(mod(x + y, 255.0)) / 255.0,
 		abs(mod(x - y, 255.0)) / 255.0,
 		1.0
-	);
+	) * 1.5;
+}
+
+float blink() {
+	if (randRes > 0.98) {
+		return sin(randRes/3.0+(offset.x+offset.y+gl_FragCoord.x)/10.0)/2.0 + 0.5;
+	}
+	return 1.0;
 }
 
 void main() {
 	x = round(offset.x + gl_FragCoord.x);
 	y = round(offset.y + gl_FragCoord.y);
-	vec4 result = starColor() * hasStar();
+	d = 10.0;
+	rx = round(x / d);
+	ry = round(y / d);
+	randRes = rand(vec2(rx, ry));
+	vec4 result = starColor() * hasStar() * blink();
 	gl_FragColor = result;
 }
 

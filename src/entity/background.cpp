@@ -46,9 +46,10 @@ void Background::render(Game * game) {
 
 void Background::update(Game * game) {
 	//auto s = game->getWindow().getSize();
-	auto t = game->getTime() * 100;
-	offset.x = t / 8.0;
-	offset.y = t / 8.0;
+	//auto d = game->getDelta()*100;
+	auto t = game->getTime() * 100 / 8.0;
+	offset.x = t;
+	offset.y = t;
 
 	if (game->getActive() && sf::Keyboard::isKeyPressed(sf::Keyboard::F5)) {
 		std::cout << "Reloading shaders!" << std::endl;
