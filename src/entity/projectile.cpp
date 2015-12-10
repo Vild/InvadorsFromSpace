@@ -33,6 +33,7 @@ void Projectile::update(Game * game) {
 						if (pos <= myPos + mySize) {
 							std::cout << "Projectile hit: " << e[i]->toString() << std::endl;
 							getDead() = true;
+							e[i]->getDead() = true;
 						}
 					}
 				}
