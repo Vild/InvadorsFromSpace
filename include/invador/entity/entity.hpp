@@ -3,35 +3,32 @@
 
 #include <string>
 #include <invador/data.hpp>
+#include <invador/hitbox.hpp>
 #include <SFML/Graphics.hpp>
 class Game;
 
 class Entity {
 public:
-	Entity(sf::Texture & texture, vec2 pos, int textureGrid);
+	Entity(vec2 pos);
 	virtual ~Entity();
 
-	void setFrame(int index);
-
-	virtual void render(Game * game);
+	virtual void render(Game * game) = 0;
 	virtual void update(Game * game) = 0;
 
-	virtual bool isHit(vec2 pos) = 0;
+	bool isHit(vec2 pos);
+	virtual vector<Hitbox> getHitboxes() const = 0;
 
 	bool & getDead();
 	vec2 & getPos();
 	vec2 & getOffset();
 
-	sf::Texture & getTexture();
-	sf::Sprite & getSprite();
-	virtual double getScale() const;
+	virtual std::string toString() const = 0;
 private:
 	bool dead;
 	vec2 pos;
 	vec2 offset;
-	sf::Texture & texture;
-	sf::Sprite sprite;
-	int textureGrid;
 };
+
+#include <invador/game.hpp>
 
 #endif

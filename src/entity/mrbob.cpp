@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cmath>
 
-MrBob::MrBob(Game * game, vec2 pos) : Entity(game->getResources().getTexture(Textures::MrBob), pos, 4), state(BobState::Idle), stateIdx(0) {
+MrBob::MrBob(Game * game, vec2 pos) : TexturedEntity(pos, game->getResources().getTexture(Textures::MrBob), 4), state(BobState::Idle), stateIdx(0) {
 }
 
 MrBob::~MrBob() {
@@ -41,9 +41,8 @@ void MrBob::update(Game * game) {
 			stateIdx = 0;
 
 			vec2 spawnPos = getPos() + getOffset();
-			spawnPos.y -= getTexture().getSize().y * getScale() / 8;
-			spawnPos.x = (int)spawnPos.x;
-			spawnPos.y = (int)spawnPos.y;
+			spawnPos.y -= getTexture()->getSize().y * getScale() / 8;
+			spawnPos.y -= 8 * getScale();
 			game->addEntity(new Projectile(game, spawnPos, vec2(0, -400), 180));
 		}
 	}
@@ -60,6 +59,10 @@ void MrBob::update(Game * game) {
 	}
 }
 
-bool MrBob::isHit(vec2 pos) {
-	return false;
+vector<Hitbox> MrBob::getHitboxes() const {
+	return vector<Hitbox>({Hitbox(vec2(1*getScale(), 1*getScale()), vec2(14*getScale(), 15*getScale()))});
+}
+
+std::string MrBob::toString() const {
+	return "MrBob";
 }

@@ -5,12 +5,31 @@
 #include <invador/entity/testguy.hpp>
 #include <invador/entity/mrbob.hpp>
 
+#include <iostream>
+#include <typeinfo>
+
 Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), delta(0), time(0), windowActive(false),
 	blockedViews({sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0))}) {
 	recalcView();
 	addEntity(new Background(this));
 	addEntity(new TestGuy(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
+
+	blockedViews[0].setSize(sf::Vector2f(1000, 1000));
+	blockedViews[0].setPosition(sf::Vector2f(-1000, 0));
+	blockedViews[0].setFillColor(sf::Color(255, 255, 255, 255/4));
+
+	blockedViews[1].setSize(sf::Vector2f(1000, 1000));
+	blockedViews[1].setPosition(sf::Vector2f(1000, 0));
+	blockedViews[1].setFillColor(sf::Color(255, 255, 255, 255/4));
+
+	blockedViews[2].setSize(sf::Vector2f(1000, 1000));
+	blockedViews[2].setPosition(sf::Vector2f(0, -1000));
+	blockedViews[2].setFillColor(sf::Color(255, 255, 255, 255/4));
+
+	blockedViews[3].setSize(sf::Vector2f(1000, 1000));
+	blockedViews[3].setPosition(sf::Vector2f(0, 1000));
+	blockedViews[3].setFillColor(sf::Color(255, 255, 255, 255/4));
 }
 
 Game::~Game() {
@@ -51,13 +70,24 @@ int Game::mainLoop() {
 		for (unsigned int i = 0; i < entities.size(); i++) {
 			window.setView(renderView);
 			entities[i]->render(this);
+
+			vector<Hitbox> boxes = entities[i]->getHitboxes();
+			for (unsigned int j = 0; j < boxes.size(); j++) {
+				auto s = boxes[j].getSize();
+				auto p = boxes[j].getOffset() + entities[i]->getPos() + entities[i]->getOffset();
+
+				sf::RectangleShape box(sf::Vector2f(s.x, s.y));
+				box.setPosition(sf::Vector2f(p.x, p.y));
+				box.setFillColor(sf::Color::Transparent);
+				box.setOutlineColor(sf::Color::Yellow);
+				box.setOutlineThickness(2);
+				window.draw(box);
+			}
 		}
 
-
-
-		//window.setView(sf::View(sf::FloatRect(0, 0, window.getSize().x, window.getSize().y)));
-		//for (int i = 0; i < 4; i++)
-		//	window.draw(blockedViews[i]);
+		window.setView(renderView);
+		for (int i = 0; i < 4; i++)
+			window.draw(blockedViews[i]);
 
 		window.display();
 	}
@@ -68,12 +98,16 @@ void Game::addEntity(Entity * entity) {
 	entities.push_back(entity);
 }
 
-double Game::getDelta() {
+double Game::getDelta() const {
 	return delta;
 }
 
-double Game::getTime() {
+double Game::getTime() const {
 	return time;
+}
+
+bool Game::getActive() const {
+	return windowActive;
 }
 
 sf::RenderWindow & Game::getWindow() {
@@ -84,30 +118,19 @@ Resources & Game::getResources() {
 	return resources;
 }
 
-bool Game::getActive() {
-	return windowActive;
+std::vector<Entity *> Game::getEntities() {
+	return entities;
 }
+
 
 void Game::recalcView() {
 	int newW = (1000*window.getSize().x)/window.getSize().y;
 	int newH = (1000*window.getSize().y)/window.getSize().x;
 	int displaceW = (newW - 1000)/(-2);
 	int displaceH = (newH - 1000)/(-2);
-	if (displaceW < displaceH) {
+
+	if (displaceW < displaceH)
 		renderView = sf::View(sf::FloatRect(displaceW, 0, newW, 1000));
-
-		blockedViews[0].setSize(sf::Vector2f(-displaceW, window.getSize().y));
-		blockedViews[0].setPosition(sf::Vector2f(0, 0));
-
-		blockedViews[1].setSize(sf::Vector2f(-displaceW, window.getSize().y));
-		blockedViews[1].setPosition(sf::Vector2f(-displaceW + newW, 0));
-	} else {
+	else
 		renderView = sf::View(sf::FloatRect(0, displaceH, 1000, newH));
-
-		blockedViews[2].setSize(sf::Vector2f(window.getSize().x, -displaceH));
-		blockedViews[2].setPosition(sf::Vector2f(0, 0));
-
-		blockedViews[3].setSize(sf::Vector2f(window.getSize().x, -displaceH));
-		blockedViews[3].setPosition(sf::Vector2f(0, -displaceH + newH));
-	}
 }

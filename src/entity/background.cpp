@@ -9,10 +9,7 @@
 
 #include <sys/stat.h>
 
-Background::Background(Game * game) : Entity(game->getResources().getTexture(Textures::Background), vec2(0, 0), 1), block(sf::Vector2f(10, 10)), offset(0, 0) {
-	getTexture().setRepeated(true);
-	getSprite().setScale(sf::Vector2f(getScale(), getScale()));
-
+Background::Background(Game * game) : Entity(vec2(0, 0)), offset(0, 0) {
 	shader = new sf::Shader();
 	shader->loadFromFile("res/shader/background.vert", "res/shader/background.frag");
 }
@@ -41,7 +38,6 @@ void Background::render(Game * game) {
 
 	shader->setParameter("offset", offset.x, offset.y);
 	game->getWindow().draw(block, shader);
-	//Entity::render(game);
 }
 
 void Background::update(Game * game) {
@@ -58,11 +54,14 @@ void Background::update(Game * game) {
 	}
 }
 
-bool Background::isHit(vec2 pos) {
-	return false;
+vector<Hitbox> Background::getHitboxes() const {
+	return vector<Hitbox>();
 }
-
 
 double Background::getScale() const {
 	return 1.0;
+}
+
+std::string Background::toString() const {
+	return "Background";
 }

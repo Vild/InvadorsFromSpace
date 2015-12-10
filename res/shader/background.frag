@@ -10,7 +10,7 @@ float hasStar() {
 	float rx = round(x / d);
 	float ry = round(y / d);
 
-	if (rand(vec2(rx, ry)) > 0.99) {
+	if (rand(vec2(rx, ry)) > 0.9) {
 		float cx = rx * d;
 		float cy = ry * d;
 

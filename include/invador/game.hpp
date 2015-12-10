@@ -17,12 +17,13 @@ public:
 
 	void addEntity(Entity * entity);
 
-	double getDelta();
-	double getTime();
+	double getDelta() const;
+	double getTime() const;
+	bool getActive() const;
 
 	sf::RenderWindow & getWindow();
 	Resources & getResources();
-	bool getActive();
+	std::vector<Entity *> getEntities();
 
 private:
 	sf::RenderWindow window;

@@ -12,6 +12,10 @@ public:
 	void update(Game * game);
 	bool isHit(vec2 pos);
 	double getScale() const;
+
+	vector<Hitbox> getHitboxes() const;
+
+	virtual std::string toString() const;
 private:
 	sf::RectangleShape block;
 	sf::Shader * shader;

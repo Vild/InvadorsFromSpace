@@ -4,3 +4,6 @@
 /obj
 /invador
 *.exe
+GPATH
+GRTAGS
+GTAGS

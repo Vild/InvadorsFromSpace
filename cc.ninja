@@ -1,10 +1,14 @@
 rule cxx
-  command = g++ $cxxflags -c $in -o $out
+  depfile = $out.d
+  command = g++ -MMD -MF $out.d $cxxflags -c $in -o $out
 rule link
-  command = g++ $lflags $in -o $out
+  depfile = $out.d
+  command = g++ -MMD -MF $out.d $lflags $in -o $out
 
 # Uncommment to build for windows
 #rule cxx
+#  depfile = $out.d
 #  command = x86_64-w64-mingw32-g++ -c $in $cxxflags -o $out
 #rule link
+#  depfile = $out.d
 #  command = x86_64-w64-mingw32-g++ $in $lflags -o $out

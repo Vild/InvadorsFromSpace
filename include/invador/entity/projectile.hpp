@@ -1,15 +1,17 @@
 #ifndef PROJECTILE_HPP_
 #define PROJECTILE_HPP_
 
-#include <invador/entity/entity.hpp>
+#include <invador/entity/texturedentity.hpp>
 
-class Projectile : public Entity {
+class Projectile : public TexturedEntity {
 public:
 	Projectile(Game * game, vec2 pos, vec2 velocity, double rotate);
 	virtual ~Projectile();
 
 	void update(Game * game);
-	bool isHit(vec2 pos);
+	vector<Hitbox> getHitboxes() const;
+
+	virtual std::string toString() const;
 private:
 	vec2 velocity;
 	double rotate;
