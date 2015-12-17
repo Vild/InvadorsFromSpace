@@ -15,19 +15,19 @@ Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), delta(
 	addEntity(new MissAlice(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 
-	blockedViews[0].setSize(sf::Vector2f(1000, 1000));
-	blockedViews[0].setPosition(sf::Vector2f(-1000, 0));
+	blockedViews[0].setSize(sf::Vector2f(10000, 10000));
+	blockedViews[0].setPosition(sf::Vector2f(-10000, 0));
 	blockedViews[0].setFillColor(sf::Color(255, 255, 255, 255/4));
 
-	blockedViews[1].setSize(sf::Vector2f(1000, 1000));
+	blockedViews[1].setSize(sf::Vector2f(10000, 10000));
 	blockedViews[1].setPosition(sf::Vector2f(1000, 0));
 	blockedViews[1].setFillColor(sf::Color(255, 255, 255, 255/4));
 
-	blockedViews[2].setSize(sf::Vector2f(1000, 1000));
-	blockedViews[2].setPosition(sf::Vector2f(0, -1000));
+	blockedViews[2].setSize(sf::Vector2f(10000, 10000));
+	blockedViews[2].setPosition(sf::Vector2f(0, -10000));
 	blockedViews[2].setFillColor(sf::Color(255, 255, 255, 255/4));
 
-	blockedViews[3].setSize(sf::Vector2f(1000, 1000));
+	blockedViews[3].setSize(sf::Vector2f(10000, 10000));
 	blockedViews[3].setPosition(sf::Vector2f(0, 1000));
 	blockedViews[3].setFillColor(sf::Color(255, 255, 255, 255/4));
 }
