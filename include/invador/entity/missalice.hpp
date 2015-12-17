@@ -3,6 +3,11 @@
 
 #include <invador/entity/texturedentity.hpp>
 
+enum class AliceState {
+	Idle = 0,
+	Shooting
+};
+
 class MissAlice : public TexturedEntity {
 public:
 	MissAlice(Game * game, vec2 pos);
@@ -13,7 +18,8 @@ public:
 
 	virtual std::string toString() const;
 private:
-	double shootDelay;
+	AliceState state;
+	double stateIdx;
 };
 
 #endif

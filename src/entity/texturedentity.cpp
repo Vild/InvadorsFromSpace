@@ -35,5 +35,5 @@ sf::Sprite & TexturedEntity::getSprite() {
 }
 
 double TexturedEntity::getScale() const {
-	return 5.0;
+	return 3.0;//5.0;
 }

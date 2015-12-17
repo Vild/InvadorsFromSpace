@@ -7,12 +7,18 @@
 
 #include <iostream>
 #include <typeinfo>
+#include <cstdlib>
+#include <ctime>
 
 Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), delta(0), time(0), windowActive(false),
 	blockedViews({sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0))}) {
+
+	std::srand(std::time(NULL));
 	recalcView();
 	addEntity(new Background(this));
-	addEntity(new MissAlice(this, vec2(window.getSize().x/2, window.getSize().y/2)));
+	for (unsigned int i = 0; i <= window.getSize().x/64; i++)
+		addEntity(new MissAlice(this, vec2(i * 64, 32)));
+
 	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 
 	blockedViews[0].setSize(sf::Vector2f(10000, 10000));

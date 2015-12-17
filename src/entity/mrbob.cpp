@@ -42,7 +42,7 @@ void MrBob::update(Game * game) {
 
 			vec2 spawnPos = getPos() + getOffset();
 			spawnPos.y -= getTexture()->getSize().y * getScale() / 8;
-			spawnPos.y -= 8 * getScale();
+			spawnPos.y -= 5 * getScale();
 			game->addEntity(new Projectile(game, spawnPos, vec2(0, -400), 180));
 		}
 	}
