@@ -14,7 +14,7 @@ build obj/hitbox.o: cxx src/hitbox.cpp
 build obj/entity/entity.o: cxx src/entity/entity.cpp
 build obj/entity/texturedentity.o: cxx src/entity/texturedentity.cpp
 build obj/entity/projectile.o: cxx src/entity/projectile.cpp
-build obj/entity/testguy.o: cxx src/entity/testguy.cpp
+build obj/entity/missalice.o: cxx src/entity/missalice.cpp
 build obj/entity/mrbob.o: cxx src/entity/mrbob.cpp
 build obj/entity/background.o: cxx src/entity/background.cpp
 
@@ -26,7 +26,7 @@ build invador: link $
  obj/entity/entity.o $
  obj/entity/texturedentity.o $
  obj/entity/projectile.o $
- obj/entity/testguy.o $
+ obj/entity/missalice.o $
  obj/entity/mrbob.o $
  obj/entity/background.o
 

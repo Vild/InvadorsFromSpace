@@ -6,7 +6,7 @@
 enum class Textures {
 	Background = 0,
 	Projectile,
-	TestGuy,
+	MissAlice,
 	MrBob,
 
 	NUM_OF_TEXTURES

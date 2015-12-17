@@ -1,17 +1,17 @@
-#include <invador/entity/testguy.hpp>
+#include <invador/entity/missalice.hpp>
 #include <invador/game.hpp>
 #include <invador/entity/projectile.hpp>
 
 #include <iostream>
 #include <cmath>
 
-TestGuy::TestGuy(Game * game, vec2 pos) : TexturedEntity(pos, game->getResources().getTexture(Textures::TestGuy), 2), shootDelay(0){
+MissAlice::MissAlice(Game * game, vec2 pos) : TexturedEntity(pos, game->getResources().getTexture(Textures::MissAlice), 2), shootDelay(0){
 }
 
-TestGuy::~TestGuy() {
+MissAlice::~MissAlice() {
 }
 
-void TestGuy::update(Game * game) {
+void MissAlice::update(Game * game) {
 	setFrame((int)(game->getTime()*8) % 4);
 	getPos().x = 0;
 	getOffset().x = cos(game->getTime()/1.0) * 400 + 400;
@@ -29,10 +29,10 @@ void TestGuy::update(Game * game) {
 	}
 }
 
-vector<Hitbox> TestGuy::getHitboxes() const {
+vector<Hitbox> MissAlice::getHitboxes() const {
 	return vector<Hitbox>({Hitbox(vec2(1*getScale(), 5*getScale()), vec2(14*getScale(), 11*getScale()))});
 }
 
-std::string TestGuy::toString() const {
-	return "TestGuy";
+std::string MissAlice::toString() const {
+	return "MissAlice";
 }

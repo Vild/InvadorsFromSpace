@@ -1,12 +1,12 @@
-#ifndef TESTGUY_HPP_
-#define TESTGUY_HPP_
+#ifndef MISSALICE_HPP_
+#define MISSALICE_HPP_
 
 #include <invador/entity/texturedentity.hpp>
 
-class TestGuy : public TexturedEntity {
+class MissAlice : public TexturedEntity {
 public:
-	TestGuy(Game * game, vec2 pos);
-	virtual ~TestGuy();
+	MissAlice(Game * game, vec2 pos);
+	virtual ~MissAlice();
 
 	void update(Game * game);
 	vector<Hitbox> getHitboxes() const;

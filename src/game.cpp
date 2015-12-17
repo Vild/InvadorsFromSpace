@@ -2,7 +2,7 @@
 
 #include <invador/entity/projectile.hpp>
 #include <invador/entity/background.hpp>
-#include <invador/entity/testguy.hpp>
+#include <invador/entity/missalice.hpp>
 #include <invador/entity/mrbob.hpp>
 
 #include <iostream>
@@ -12,7 +12,7 @@ Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), delta(
 	blockedViews({sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0))}) {
 	recalcView();
 	addEntity(new Background(this));
-	addEntity(new TestGuy(this, vec2(window.getSize().x/2, window.getSize().y/2)));
+	addEntity(new MissAlice(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 
 	blockedViews[0].setSize(sf::Vector2f(1000, 1000));
