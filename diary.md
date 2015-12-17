@@ -40,3 +40,12 @@
 * Added detection of projectiles hitting other entities.
 * Added out-of-bounds semi-transparent borders
 * Changes the sizes of entities, to work better in the limited 1000x1000 space
+
+
+## 18/12 - 3h
+
+* TestGuy -> MissAlice
+* Reworked how MissAlice workes
+* Added alot of MissAlice at the top at the screen
+* MissAlice now has animations for everything
+* MrBob and MissAlice scale is now 3 instead of 5
