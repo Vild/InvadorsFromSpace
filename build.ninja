@@ -30,7 +30,8 @@ build invador: link $
  obj/entity/mrbob.o $
  obj/entity/background.o
 
-build GPATH GRTAGS GTAGS: gtag
+
+build GPATH GRTAGS GTAGS .phony: gtag
 
 default invador
 default GPATH
