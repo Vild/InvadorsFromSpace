@@ -4,8 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 enum class Textures {
-	Background = 0,
-	Projectile,
+	Projectile = 0,
 	MissAlice,
 	MrBob,
 
