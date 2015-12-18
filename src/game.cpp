@@ -16,8 +16,9 @@ Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), delta(
 	std::srand(std::time(NULL));
 	recalcView();
 	addEntity(new Background(this));
-	for (unsigned int i = 0; i <= window.getSize().x/64; i++)
-		addEntity(new MissAlice(this, vec2(i * 64, 32)));
+	for (unsigned int x = 0; x < 16; x++)
+		for (unsigned int y = 0; y < 8; y++)
+			missAlices[y*16+x] = addEntity(new MissAlice(this, vec2(x * 64, y * 64)));
 
 	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 
@@ -46,10 +47,13 @@ Game::~Game() {
 int Game::mainLoop() {
 	sf::Clock clock;
 
+	double fpsTime = 0;
+	int fps = 0;
 	while (window.isOpen()) {
 		sf::Time elapsed = clock.restart();
 		delta = elapsed.asSeconds();
 		time += delta;
+		fpsTime += delta;
 
 		sf::Event event;
 		while (window.pollEvent(event)) {
@@ -96,12 +100,20 @@ int Game::mainLoop() {
 			window.draw(blockedViews[i]);
 
 		window.display();
+		fps++;
+
+		if (fpsTime >= 0.5) {
+			std::cout << "FPS: " << fps*2 << std::endl;
+			fps = 0;
+			fpsTime-= 0.5;
+		}
 	}
 	return 0;
 }
 
-void Game::addEntity(Entity * entity) {
+Entity * Game::addEntity(Entity * entity) {
 	entities.push_back(entity);
+	return entity;
 }
 
 double Game::getDelta() const {

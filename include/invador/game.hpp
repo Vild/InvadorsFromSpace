@@ -15,7 +15,7 @@ public:
 
 	int mainLoop();
 
-	void addEntity(Entity * entity);
+	Entity * addEntity(Entity * entity);
 
 	double getDelta() const;
 	double getTime() const;
@@ -28,6 +28,7 @@ public:
 private:
 	sf::RenderWindow window;
 	std::vector<Entity *> entities;
+	Entity * missAlices[16*8];
 	Resources resources;
 	double delta;
 	double time;
