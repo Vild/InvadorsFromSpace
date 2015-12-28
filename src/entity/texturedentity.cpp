@@ -21,9 +21,10 @@ void TexturedEntity::setFrame(int index) {
 }
 
 void TexturedEntity::render(Game * game) {
+	sprite.setScale(sf::Vector2f(getScale(), getScale()));
 	vec2 p = getPos() + getOffset();
 	sprite.setPosition(p.x, p.y);
-	game->getWindow().draw(sprite);
+	game->getTarget().draw(sprite);
 }
 
 sf::Texture * TexturedEntity::getTexture() {
@@ -35,5 +36,5 @@ sf::Sprite & TexturedEntity::getSprite() {
 }
 
 double TexturedEntity::getScale() const {
-	return 3.0;//5.0;
+	return 3.0;
 }

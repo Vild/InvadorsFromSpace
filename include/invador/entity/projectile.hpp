@@ -10,6 +10,7 @@ public:
 
 	void update(Game * game);
 	vector<Hitbox> getHitboxes() const;
+	virtual double getScale() const;
 
 	virtual std::string toString() const;
 private:

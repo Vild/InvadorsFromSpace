@@ -10,7 +10,7 @@ enum class AliceState {
 
 class MissAlice : public TexturedEntity {
 public:
-	MissAlice(Game * game, vec2 pos);
+	MissAlice(Game * game, vec2 pos, vec2 grid);
 	virtual ~MissAlice();
 
 	void update(Game * game);
@@ -20,6 +20,7 @@ public:
 private:
 	AliceState state;
 	double stateIdx;
+	vec2 grid;
 };
 
 #endif

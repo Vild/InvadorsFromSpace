@@ -10,15 +10,15 @@
 #include <cstdlib>
 #include <ctime>
 
-Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), delta(0), time(0), windowActive(false),
+Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), currentTarget(&window), delta(0), time(0), windowActive(false),
 	blockedViews({sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0))}) {
 
 	std::srand(std::time(NULL));
 	recalcView();
 	addEntity(new Background(this));
-	for (unsigned int x = 0; x < 16; x++)
-		for (unsigned int y = 0; y < 8; y++)
-			missAlices[y*16+x] = addEntity(new MissAlice(this, vec2(x * 64, y * 64)));
+	for (unsigned int x = 0; x < missAlicesColumn; x++)
+		for (unsigned int y = 0; y < missAlicesRow; y++)
+			missAlices[y*missAlicesColumn+x] = addEntity(new MissAlice(this, vec2((x + 1) * 64, y * 64 * 1.5), vec2(x, y)));
 
 	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
 
@@ -70,6 +70,10 @@ int Game::mainLoop() {
 		for (unsigned int i = 0; i < entities.size(); i++) {
 			entities[i]->update(this);
 			if (entities[i]->getDead()) {
+				for(int j = 0; j < 16*8; j++)
+					if (missAlices[j] == entities[i])
+						missAlices[j] = NULL;
+
 				delete entities[i];
 				entities.erase(entities.begin() + i);
 				i--;
@@ -91,7 +95,7 @@ int Game::mainLoop() {
 				box.setFillColor(sf::Color::Transparent);
 				box.setOutlineColor(sf::Color::Yellow);
 				box.setOutlineThickness(2);
-				window.draw(box);
+				//window.draw(box);
 			}
 		}
 
@@ -132,6 +136,10 @@ sf::RenderWindow & Game::getWindow() {
 	return window;
 }
 
+sf::RenderTarget & Game::getTarget() {
+	return *currentTarget;
+}
+
 Resources & Game::getResources() {
 	return resources;
 }
@@ -140,6 +148,11 @@ std::vector<Entity *> Game::getEntities() {
 	return entities;
 }
 
+Entity * Game::getMissAlices(vec2 pos) {
+	if (pos.x >= 0 && pos.x < missAlicesColumn && pos.y >= 0 && pos.y < missAlicesRow)
+		return missAlices[(int)pos.y * missAlicesColumn + (int)pos.x];
+	return NULL;
+}
 
 void Game::recalcView() {
 	int newW = (1000*window.getSize().x)/window.getSize().y;

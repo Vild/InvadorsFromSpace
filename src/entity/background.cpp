@@ -33,15 +33,15 @@ void Background::render(Game * game) {
 
 	oldStat = newStat;
 
-	game->getWindow().setView(sf::View(sf::FloatRect(0, 0, game->getWindow().getSize().x, game->getWindow().getSize().y)));
-	block.setSize(sf::Vector2f(game->getWindow().getSize().x, game->getWindow().getSize().y));
+	game->getTarget().setView(sf::View(sf::FloatRect(0, 0, game->getTarget().getSize().x, game->getTarget().getSize().y)));
+	block.setSize(sf::Vector2f(game->getTarget().getSize().x, game->getTarget().getSize().y));
 
 	shader->setParameter("offset", offset.x, offset.y);
-	game->getWindow().draw(block, shader);
+	game->getTarget().draw(block, shader);
 }
 
 void Background::update(Game * game) {
-	//auto s = game->getWindow().getSize();
+	//auto s = game->getTarget().getSize();
 	//auto d = game->getDelta()*100;
 	auto t = game->getTime() * 100 / 8.0;
 	offset.x = t;

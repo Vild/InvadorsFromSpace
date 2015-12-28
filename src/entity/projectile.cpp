@@ -13,7 +13,7 @@ void Projectile::update(Game * game) {
 	setFrame((int)(game->getTime()*20) % 4 +((int)rotate / 90)*4);
 	getPos() += velocity * game->getDelta();
 	if (getPos().y < (int)(getTexture()->getSize().y*getScale()) / -2 ||
-			getPos().y > game->getWindow().getSize().y)
+			getPos().y > game->getTarget().getSize().y)
 		getDead() = true;
 
 	auto myBoxes = getHitboxes();
@@ -47,6 +47,10 @@ vector<Hitbox> Projectile::getHitboxes() const {
 		return vector<Hitbox>({Hitbox(vec2(6*getScale(), 2*getScale()), vec2(4*getScale(), 12*getScale()))});
 	else
 		return vector<Hitbox>({Hitbox(vec2(2*getScale(), 6*getScale()), vec2(12*getScale(), 4*getScale()))});
+}
+
+double Projectile::getScale() const {
+	return 1.5;
 }
 
 std::string Projectile::toString() const {

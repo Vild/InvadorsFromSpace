@@ -31,7 +31,7 @@ build invador: link $
  obj/entity/background.o
 
 
-build GPATH GRTAGS GTAGS .phony: gtag
+build GPATH GRTAGS GTAGS: gtag invador
 
 default invador
 default GPATH
