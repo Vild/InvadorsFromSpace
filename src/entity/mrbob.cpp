@@ -12,14 +12,14 @@ MrBob::MrBob(Game *game, vec2 pos)
 MrBob::~MrBob() {}
 
 void MrBob::update(Game *game) {
-	const double speed = 600;
-	double d = game->getDelta();
-
-	stateIdx += d * 8;
-
 	if (game->getActive()) {
-		auto &x = getPos().x;
-		auto &y = getPos().y;
+		const double speed = 600;
+		double d = game->getDelta();
+
+		stateIdx += d * 8;
+
+		auto &x = getPosRef().x;
+		auto &y = getPosRef().y;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
 		    sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			y -= d * speed;
@@ -42,7 +42,7 @@ void MrBob::update(Game *game) {
 			state = BobState::Shooting;
 			stateIdx = 0;
 
-			vec2 spawnPos = getPos() + getOffset();
+			vec2 spawnPos = getPosRef() + getOffsetRef();
 			spawnPos.y -=
 			    getTexture()->getSize().y * getScale() / 8;
 			spawnPos.y -= 4 * getScale();
@@ -50,17 +50,17 @@ void MrBob::update(Game *game) {
 			game->addEntity(
 			    new Projectile(game, spawnPos, vec2(0, -600), 180));
 		}
-	}
 
-	if (state == BobState::Shooting && stateIdx >= 4) {
-		state = BobState::Idle;
-		stateIdx = 0;
-	}
+		if (state == BobState::Shooting && stateIdx >= 4) {
+			state = BobState::Idle;
+			stateIdx = 0;
+		}
 
-	if (state == BobState::Idle) {
-		setFrame((int)stateIdx % 4);
-	} else if (state == BobState::Shooting) {
-		setFrame((int)stateIdx % 4 + 4);
+		if (state == BobState::Idle) {
+			setFrame((int)stateIdx % 4);
+		} else if (state == BobState::Shooting) {
+			setFrame((int)stateIdx % 4 + 4);
+		}
 	}
 }
 

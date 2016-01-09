@@ -1,48 +1,44 @@
 #include <invador/entity/projectile.hpp>
 #include <invador/game.hpp>
+#include <invador/entity/mrbob.hpp>
 
 #include <iostream>
 
 Projectile::Projectile(Game *game, vec2 pos, vec2 velocity, double rotate)
-    : TexturedEntity(pos, game->getResources().getTexture(Textures::Projectile),
-                     4),
+    : TexturedEntity(pos, game->getResources().getTexture(Textures::Projectile), 4),
       velocity(velocity), rotate(rotate) {}
 
 Projectile::~Projectile() {}
 
 void Projectile::update(Game *game) {
-	setFrame((int)(game->getTime() * 20) % 4 + ((int)rotate / 90) * 4);
-	getPos() += velocity * game->getDelta();
-	if (getPos().y < (int)(getTexture()->getSize().y * getScale()) / -2 ||
-	    getPos().y > game->getTarget().getSize().y)
-		getDead() = true;
+	if (game->getActive()) {
+		setFrame((int)(game->getTime() * 20) % 4 + ((int)rotate / 90) * 4);
+		getPosRef() += velocity * game->getDelta();
+		if (getPosRef().y < (int)(getTexture()->getSize().y * getScale()) / -2 ||
+		    getPosRef().y > game->getTarget().getSize().y)
+			getDeadRef() = true;
 
-	auto myBoxes = getHitboxes();
-	auto e = game->getEntities();
-	for (unsigned int i = 0; i < e.size() && !getDead(); i++) {
-		if (e[i] != this) {
-			auto boxes = e[i]->getHitboxes();
+		auto myBoxes = getHitboxes();
+		auto e = game->getEntities();
+		for (unsigned int i = 0; i < e.size() && !getDeadRef(); i++) {
+			if (e[i] != this) {
+				auto boxes = e[i]->getHitboxes();
 
-			for (unsigned int j = 0; j < boxes.size() && !getDead();
-			     j++) {
-				auto size = boxes[j].getSize();
-				auto pos = boxes[j].getOffset() +
-				           e[i]->getPos() + e[i]->getOffset();
-				for (unsigned int k = 0;
-				     k < myBoxes.size() && !getDead(); k++) {
-					auto mySize = myBoxes[j].getSize();
-					auto myPos = myBoxes[j].getOffset() +
-					             getPos() + getOffset();
+				for (unsigned int j = 0;  j < boxes.size() && !getDeadRef(); j++) {
+					auto size = boxes[j].getSize();
+					auto pos = boxes[j].getOffset() + e[i]->getPosRef() + e[i]->getOffsetRef();
+					for (unsigned int k = 0; k < myBoxes.size() && !getDeadRef(); k++) {
+						auto mySize = myBoxes[j].getSize();
+						auto myPos = myBoxes[j].getOffset() + getPosRef() + getOffsetRef();
 
-					if (pos + size >= myPos) {
-						if (pos <= myPos + mySize) {
-							std::cout
-							    << "Projectile "
-							       "hit: "
-							    << e[i]->toString()
-							    << std::endl;
-							getDead() = true;
-							e[i]->getDead() = true;
+						if (pos + size >= myPos) {
+							if (pos <= myPos + mySize) {
+								std::cout  << "Projectile hit: " << e[i]->toString() << std::endl;
+								getDeadRef() = true;
+								e[i]->getDeadRef() = true;
+								if (dynamic_cast<MrBob *>( e[i]))
+									game->setState(GameState::Lost);
+							}
 						}
 					}
 				}

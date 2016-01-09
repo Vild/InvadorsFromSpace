@@ -16,7 +16,8 @@ Game::Game()
       blockedViews({sf::RectangleShape(sf::Vector2f(0, 0)),
                     sf::RectangleShape(sf::Vector2f(0, 0)),
                     sf::RectangleShape(sf::Vector2f(0, 0)),
-                    sf::RectangleShape(sf::Vector2f(0, 0))}) {
+                    sf::RectangleShape(sf::Vector2f(0, 0))}),
+      gameState(GameState::Intro) {
 
 	std::srand(std::time(NULL));
 	recalcView();
@@ -56,6 +57,8 @@ Game::~Game() {
 int Game::mainLoop() {
 	sf::Clock clock;
 
+	setState(GameState::Game);
+
 	double fpsTime = 0;
 	int fps = 0;
 	while (window.isOpen()) {
@@ -78,7 +81,7 @@ int Game::mainLoop() {
 
 		for (unsigned int i = 0; i < entities.size(); i++) {
 			entities[i]->update(this);
-			if (entities[i]->getDead()) {
+			if (entities[i]->getDeadRef()) {
 				for (int j = 0; j < 16 * 8; j++)
 					if (missAlices[j] == entities[i])
 						missAlices[j] = NULL;
@@ -97,9 +100,7 @@ int Game::mainLoop() {
 			vector<Hitbox> boxes = entities[i]->getHitboxes();
 			for (unsigned int j = 0; j < boxes.size(); j++) {
 				auto s = boxes[j].getSize();
-				auto p = boxes[j].getOffset() +
-				         entities[i]->getPos() +
-				         entities[i]->getOffset();
+				auto p = boxes[j].getOffset() + entities[i]->getPosRef() + entities[i]->getOffsetRef();
 
 				sf::RectangleShape box(sf::Vector2f(s.x, s.y));
 				box.setPosition(sf::Vector2f(p.x, p.y));
@@ -140,7 +141,7 @@ double Game::getTime() const {
 }
 
 bool Game::getActive() const {
-	return windowActive;
+	return windowActive && gameState == GameState::Game;
 }
 
 sf::RenderWindow &Game::getWindow() {
@@ -160,10 +161,13 @@ std::vector<Entity *> Game::getEntities() {
 }
 
 Entity *Game::getMissAlices(vec2 pos) {
-	if (pos.x >= 0 && pos.x < missAlicesColumn && pos.y >= 0 &&
-	    pos.y < missAlicesRow)
+	if (pos.x >= 0 && pos.x < missAlicesColumn && pos.y >= 0 && pos.y < missAlicesRow)
 		return missAlices[(int)pos.y * missAlicesColumn + (int)pos.x];
 	return NULL;
+}
+
+void Game::setState(GameState state) {
+	gameState = state;
 }
 
 void Game::recalcView() {

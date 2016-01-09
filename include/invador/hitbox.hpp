@@ -4,7 +4,7 @@
 #include <invador/data.hpp>
 
 class Hitbox {
-      public:
+public:
 	Hitbox(vec2 offset, vec2 size);
 
 	bool isHit(vec2 pos);
@@ -12,7 +12,7 @@ class Hitbox {
 	vec2 getOffset() const;
 	vec2 getSize() const;
 
-      private:
+private:
 	vec2 offset;
 	vec2 size;
 };

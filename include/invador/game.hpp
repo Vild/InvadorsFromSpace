@@ -8,8 +8,15 @@
 #include <invador/resources.hpp>
 class Entity;
 
+enum class GameState {
+	Intro,
+	Game,
+	Lost,
+	Won
+};
+
 class Game {
-      public:
+public:
 	Game();
 	~Game();
 
@@ -27,7 +34,9 @@ class Game {
 	std::vector<Entity *> getEntities();
 	Entity *getMissAlices(vec2 pos);
 
-      private:
+	void setState(GameState state);
+
+private:
 	const static int missAlicesRow = 6;
 	const static int missAlicesColumn = 14;
 	sf::RenderWindow window;
@@ -40,6 +49,7 @@ class Game {
 	sf::View renderView;
 	bool windowActive;
 	sf::RectangleShape blockedViews[4];
+	GameState gameState;
 
 	void recalcView();
 };

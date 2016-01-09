@@ -7,8 +7,7 @@
 #include <cstdlib>
 
 MissAlice::MissAlice(Game *game, vec2 pos, vec2 grid)
-    : TexturedEntity(pos, game->getResources().getTexture(Textures::MissAlice),
-                     4),
+    : TexturedEntity(pos, game->getResources().getTexture(Textures::MissAlice), 4),
       state(AliceState::Idle), stateIdx(0), grid(grid) {
 	stateIdx = (rand() % 20);
 }
@@ -16,39 +15,41 @@ MissAlice::MissAlice(Game *game, vec2 pos, vec2 grid)
 MissAlice::~MissAlice() {}
 
 void MissAlice::update(Game *game) {
-	// const double speed = 600;
-	double d = game->getDelta();
-	stateIdx += d * 8;
+	if (game->getActive()) {
+		// const double speed = 600;
+		double d = game->getDelta();
+		stateIdx += d * 8;
 
-	getOffset().x = sin(game->getTime() * 2) * 4 * getScale();
-	getOffset().y = abs(sin(game->getTime() * 4) * 2 * getScale());
-	getPos().y += d * 5;
+		getOffsetRef().x = sin(game->getTime() * 2) * 4 * getScale();
+		getOffsetRef().y =
+		    abs(sin(game->getTime() * 4) * 2 * getScale());
+		getPosRef().y += d * 5;
 
-	if (getPos().y + getOffset().y >= 1000 - (80 * getScale()))
-		exit(0);
+		if (getPosRef().y + getOffsetRef().y >= 1000 - (80 * getScale()))
+			game->setState(GameState::Lost);
 
-	if (stateIdx > 24 && state != AliceState::Shooting &&
-	    !game->getMissAlices(vec2(grid.x, grid.y + 1))) {
-		state = AliceState::Shooting;
-		stateIdx = 0;
+		if (stateIdx > 24 && state != AliceState::Shooting &&
+		    !game->getMissAlices(vec2(grid.x, grid.y + 1))) {
+			state = AliceState::Shooting;
+			stateIdx = 0;
 
-		vec2 spawnPos = getPos() + getOffset();
-		spawnPos.y += getTexture()->getSize().y * getScale() / 8;
-		spawnPos.y += 9 * getScale();
-		spawnPos.x += 10;
-		game->addEntity(
-		    new Projectile(game, spawnPos, vec2(0, 400), 0));
-	}
+			vec2 spawnPos = getPosRef() + getOffsetRef();
+			spawnPos.y += getTexture()->getSize().y * getScale() / 8;
+			spawnPos.y += 9 * getScale();
+			spawnPos.x += 10;
+			game->addEntity(new Projectile(game, spawnPos, vec2(0, 400), 0));
+		}
 
-	if (state == AliceState::Shooting && stateIdx >= 4) {
-		state = AliceState::Idle;
-		stateIdx = 0;
-	}
+		if (state == AliceState::Shooting && stateIdx >= 4) {
+			state = AliceState::Idle;
+			stateIdx = 0;
+		}
 
-	if (state == AliceState::Idle) {
-		setFrame((int)stateIdx % 4);
-	} else if (state == AliceState::Shooting) {
-		setFrame((int)stateIdx % 4 + 4);
+		if (state == AliceState::Idle) {
+			setFrame((int)stateIdx % 4);
+		} else if (state == AliceState::Shooting) {
+			setFrame((int)stateIdx % 4 + 4);
+		}
 	}
 }
 

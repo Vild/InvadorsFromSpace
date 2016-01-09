@@ -12,13 +12,13 @@ enum class Textures {
 };
 
 class Resources {
-      public:
+public:
 	Resources();
 	~Resources();
 
 	sf::Texture &getTexture(Textures id);
 
-      private:
+private:
 	sf::Texture textures[static_cast<int>(Textures::NUM_OF_TEXTURES)];
 
 	void load();

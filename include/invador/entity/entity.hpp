@@ -5,10 +5,10 @@
 #include <invador/data.hpp>
 #include <invador/hitbox.hpp>
 #include <SFML/Graphics.hpp>
-class Game;
+class Game; // Can't include Game.hpp here because game.hpp includes this file
 
 class Entity {
-      public:
+public:
 	Entity(vec2 pos);
 	virtual ~Entity();
 
@@ -18,13 +18,13 @@ class Entity {
 	bool isHit(vec2 pos);
 	virtual vector<Hitbox> getHitboxes() const = 0;
 
-	bool &getDead();
-	vec2 &getPos();
-	vec2 &getOffset();
+	bool &getDeadRef();
+	vec2 &getPosRef();
+	vec2 &getOffsetRef();
 
 	virtual std::string toString() const = 0;
 
-      private:
+private:
 	bool dead;
 	vec2 pos;
 	vec2 offset;

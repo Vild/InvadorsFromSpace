@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 class TexturedEntity : public Entity {
-      public:
+public:
 	TexturedEntity(vec2 pos, sf::Texture &texture, int textureGrid);
 	virtual ~TexturedEntity();
 
@@ -18,7 +18,7 @@ class TexturedEntity : public Entity {
 	sf::Sprite &getSprite();
 	virtual double getScale() const;
 
-      private:
+private:
 	sf::Texture *texture;
 	sf::Sprite sprite;
 	int textureGrid;

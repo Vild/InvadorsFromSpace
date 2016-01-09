@@ -3,10 +3,13 @@
 
 #include <invador/entity/texturedentity.hpp>
 
-enum class AliceState { Idle = 0, Shooting };
+enum class AliceState {
+	Idle = 0,
+	Shooting
+};
 
 class MissAlice : public TexturedEntity {
-      public:
+public:
 	MissAlice(Game *game, vec2 pos, vec2 grid);
 	virtual ~MissAlice();
 
@@ -15,7 +18,7 @@ class MissAlice : public TexturedEntity {
 
 	virtual std::string toString() const;
 
-      private:
+private:
 	AliceState state;
 	double stateIdx;
 	vec2 grid;

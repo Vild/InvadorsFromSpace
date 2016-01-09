@@ -3,10 +3,13 @@
 
 #include <invador/entity/texturedentity.hpp>
 
-enum class BobState { Idle = 0, Shooting };
+enum class BobState {
+	Idle = 0,
+	Shooting
+};
 
 class MrBob : public TexturedEntity {
-      public:
+public:
 	MrBob(Game *game, vec2 pos);
 	virtual ~MrBob();
 
@@ -15,7 +18,7 @@ class MrBob : public TexturedEntity {
 
 	virtual std::string toString() const;
 
-      private:
+private:
 	BobState state;
 	double stateIdx;
 };

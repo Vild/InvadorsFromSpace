@@ -9,7 +9,8 @@
 
 #include <sys/stat.h>
 
-Background::Background(Game *game) : Entity(vec2(0, 0)), offset(0, 0) {
+Background::Background(Game *game)
+    : Entity(vec2(0, 0)), offset(0, 0) {
 	shader = new sf::Shader();
 	shader->loadFromFile("res/shader/background.vert",
 	                     "res/shader/background.frag");

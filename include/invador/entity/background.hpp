@@ -4,7 +4,7 @@
 #include <invador/entity/entity.hpp>
 
 class Background : public Entity {
-      public:
+public:
 	Background(Game *game);
 	virtual ~Background();
 
@@ -17,7 +17,7 @@ class Background : public Entity {
 
 	virtual std::string toString() const;
 
-      private:
+private:
 	sf::RectangleShape block;
 	sf::Shader *shader;
 	vec2 offset;

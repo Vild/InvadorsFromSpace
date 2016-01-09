@@ -22,7 +22,7 @@ void TexturedEntity::setFrame(int index) {
 
 void TexturedEntity::render(Game *game) {
 	sprite.setScale(sf::Vector2f(getScale(), getScale()));
-	vec2 p = getPos() + getOffset();
+	vec2 p = getPosRef() + getOffsetRef();
 	sprite.setPosition(p.x, p.y);
 	game->getTarget().draw(sprite);
 }

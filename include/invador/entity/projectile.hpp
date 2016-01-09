@@ -4,7 +4,7 @@
 #include <invador/entity/texturedentity.hpp>
 
 class Projectile : public TexturedEntity {
-      public:
+public:
 	Projectile(Game *game, vec2 pos, vec2 velocity, double rotate);
 	virtual ~Projectile();
 
@@ -14,7 +14,7 @@ class Projectile : public TexturedEntity {
 
 	virtual std::string toString() const;
 
-      private:
+private:
 	vec2 velocity;
 	double rotate;
 };
