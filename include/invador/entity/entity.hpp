@@ -8,22 +8,23 @@
 class Game;
 
 class Entity {
-public:
+      public:
 	Entity(vec2 pos);
 	virtual ~Entity();
 
-	virtual void render(Game * game) = 0;
-	virtual void update(Game * game) = 0;
+	virtual void render(Game *game) = 0;
+	virtual void update(Game *game) = 0;
 
 	bool isHit(vec2 pos);
 	virtual vector<Hitbox> getHitboxes() const = 0;
 
-	bool & getDead();
-	vec2 & getPos();
-	vec2 & getOffset();
+	bool &getDead();
+	vec2 &getPos();
+	vec2 &getOffset();
 
 	virtual std::string toString() const = 0;
-private:
+
+      private:
 	bool dead;
 	vec2 pos;
 	vec2 offset;

@@ -4,8 +4,7 @@
 
 #include <iostream>
 
-Entity::Entity(vec2 pos) : dead(false), pos(pos), offset(0, 0) {
-}
+Entity::Entity(vec2 pos) : dead(false), pos(pos), offset(0, 0) {}
 
 Entity::~Entity() {}
 
@@ -18,14 +17,14 @@ bool Entity::isHit(vec2 pos) {
 	return false;
 }
 
-bool & Entity::getDead() {
+bool &Entity::getDead() {
 	return dead;
 }
 
-vec2 & Entity::getPos() {
+vec2 &Entity::getPos() {
 	return pos;
 }
 
-vec2 & Entity::getOffset() {
+vec2 &Entity::getOffset() {
 	return offset;
 }

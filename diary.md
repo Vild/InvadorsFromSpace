@@ -49,3 +49,16 @@
 * Added alot of MissAlice at the top at the screen
 * MissAlice now has animations for everything
 * MrBob and MissAlice scale is now 3 instead of 5
+
+
+
+
+
+
+MAKE ALOT OF DIARY!!!
+
+
+Add win screen
+Add lose screen
+Replay button
+Before game info stuff

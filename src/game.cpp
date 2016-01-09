@@ -10,33 +10,42 @@
 #include <cstdlib>
 #include <ctime>
 
-Game::Game() : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"), currentTarget(&window), delta(0), time(0), windowActive(false),
-	blockedViews({sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0)), sf::RectangleShape(sf::Vector2f(0, 0))}) {
+Game::Game()
+    : window(sf::VideoMode(1000, 1000), "INVADORS FROM SPACE!"),
+      currentTarget(&window), delta(0), time(0), windowActive(false),
+      blockedViews({sf::RectangleShape(sf::Vector2f(0, 0)),
+                    sf::RectangleShape(sf::Vector2f(0, 0)),
+                    sf::RectangleShape(sf::Vector2f(0, 0)),
+                    sf::RectangleShape(sf::Vector2f(0, 0))}) {
 
 	std::srand(std::time(NULL));
 	recalcView();
 	addEntity(new Background(this));
 	for (unsigned int x = 0; x < missAlicesColumn; x++)
 		for (unsigned int y = 0; y < missAlicesRow; y++)
-			missAlices[y*missAlicesColumn+x] = addEntity(new MissAlice(this, vec2((x + 1) * 64, y * 64 * 1.5), vec2(x, y)));
+			missAlices[y * missAlicesColumn + x] =
+			    addEntity(new MissAlice(
+			        this, vec2((x + 1) * 64, y * 64 * 1.5),
+			        vec2(x, y)));
 
-	addEntity(new MrBob(this, vec2(window.getSize().x/2, window.getSize().y/2)));
+	addEntity(new MrBob(
+	    this, vec2(window.getSize().x / 2, window.getSize().y / 2)));
 
 	blockedViews[0].setSize(sf::Vector2f(10000, 10000));
 	blockedViews[0].setPosition(sf::Vector2f(-10000, 0));
-	blockedViews[0].setFillColor(sf::Color(255, 255, 255, 255/4));
+	blockedViews[0].setFillColor(sf::Color(255, 255, 255, 255 / 4));
 
 	blockedViews[1].setSize(sf::Vector2f(10000, 10000));
 	blockedViews[1].setPosition(sf::Vector2f(1000, 0));
-	blockedViews[1].setFillColor(sf::Color(255, 255, 255, 255/4));
+	blockedViews[1].setFillColor(sf::Color(255, 255, 255, 255 / 4));
 
 	blockedViews[2].setSize(sf::Vector2f(10000, 10000));
 	blockedViews[2].setPosition(sf::Vector2f(0, -10000));
-	blockedViews[2].setFillColor(sf::Color(255, 255, 255, 255/4));
+	blockedViews[2].setFillColor(sf::Color(255, 255, 255, 255 / 4));
 
 	blockedViews[3].setSize(sf::Vector2f(10000, 10000));
 	blockedViews[3].setPosition(sf::Vector2f(0, 1000));
-	blockedViews[3].setFillColor(sf::Color(255, 255, 255, 255/4));
+	blockedViews[3].setFillColor(sf::Color(255, 255, 255, 255 / 4));
 }
 
 Game::~Game() {
@@ -70,7 +79,7 @@ int Game::mainLoop() {
 		for (unsigned int i = 0; i < entities.size(); i++) {
 			entities[i]->update(this);
 			if (entities[i]->getDead()) {
-				for(int j = 0; j < 16*8; j++)
+				for (int j = 0; j < 16 * 8; j++)
 					if (missAlices[j] == entities[i])
 						missAlices[j] = NULL;
 
@@ -88,14 +97,16 @@ int Game::mainLoop() {
 			vector<Hitbox> boxes = entities[i]->getHitboxes();
 			for (unsigned int j = 0; j < boxes.size(); j++) {
 				auto s = boxes[j].getSize();
-				auto p = boxes[j].getOffset() + entities[i]->getPos() + entities[i]->getOffset();
+				auto p = boxes[j].getOffset() +
+				         entities[i]->getPos() +
+				         entities[i]->getOffset();
 
 				sf::RectangleShape box(sf::Vector2f(s.x, s.y));
 				box.setPosition(sf::Vector2f(p.x, p.y));
 				box.setFillColor(sf::Color::Transparent);
 				box.setOutlineColor(sf::Color::Yellow);
 				box.setOutlineThickness(2);
-				//window.draw(box);
+				// window.draw(box);
 			}
 		}
 
@@ -107,15 +118,15 @@ int Game::mainLoop() {
 		fps++;
 
 		if (fpsTime >= 0.5) {
-			std::cout << "FPS: " << fps*2 << std::endl;
+			std::cout << "FPS: " << fps * 2 << std::endl;
 			fps = 0;
-			fpsTime-= 0.5;
+			fpsTime -= 0.5;
 		}
 	}
 	return 0;
 }
 
-Entity * Game::addEntity(Entity * entity) {
+Entity *Game::addEntity(Entity *entity) {
 	entities.push_back(entity);
 	return entity;
 }
@@ -132,15 +143,15 @@ bool Game::getActive() const {
 	return windowActive;
 }
 
-sf::RenderWindow & Game::getWindow() {
+sf::RenderWindow &Game::getWindow() {
 	return window;
 }
 
-sf::RenderTarget & Game::getTarget() {
+sf::RenderTarget &Game::getTarget() {
 	return *currentTarget;
 }
 
-Resources & Game::getResources() {
+Resources &Game::getResources() {
 	return resources;
 }
 
@@ -148,17 +159,18 @@ std::vector<Entity *> Game::getEntities() {
 	return entities;
 }
 
-Entity * Game::getMissAlices(vec2 pos) {
-	if (pos.x >= 0 && pos.x < missAlicesColumn && pos.y >= 0 && pos.y < missAlicesRow)
+Entity *Game::getMissAlices(vec2 pos) {
+	if (pos.x >= 0 && pos.x < missAlicesColumn && pos.y >= 0 &&
+	    pos.y < missAlicesRow)
 		return missAlices[(int)pos.y * missAlicesColumn + (int)pos.x];
 	return NULL;
 }
 
 void Game::recalcView() {
-	int newW = (1000*window.getSize().x)/window.getSize().y;
-	int newH = (1000*window.getSize().y)/window.getSize().x;
-	int displaceW = (newW - 1000)/(-2);
-	int displaceH = (newH - 1000)/(-2);
+	int newW = (1000 * window.getSize().x) / window.getSize().y;
+	int newH = (1000 * window.getSize().y) / window.getSize().x;
+	int displaceW = (newW - 1000) / (-2);
+	int displaceH = (newH - 1000) / (-2);
 
 	if (displaceW < displaceH)
 		renderView = sf::View(sf::FloatRect(displaceW, 0, newW, 1000));

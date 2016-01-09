@@ -5,46 +5,50 @@
 #include <iostream>
 #include <cmath>
 
-MrBob::MrBob(Game * game, vec2 pos) : TexturedEntity(pos, game->getResources().getTexture(Textures::MrBob), 4), state(BobState::Idle), stateIdx(0) {
-}
+MrBob::MrBob(Game *game, vec2 pos)
+    : TexturedEntity(pos, game->getResources().getTexture(Textures::MrBob), 4),
+      state(BobState::Idle), stateIdx(0) {}
 
-MrBob::~MrBob() {
-}
+MrBob::~MrBob() {}
 
-void MrBob::update(Game * game) {
+void MrBob::update(Game *game) {
 	const double speed = 600;
 	double d = game->getDelta();
 
 	stateIdx += d * 8;
 
 	if (game->getActive()) {
-		auto & x = getPos().x;
-		auto & y = getPos().y;
+		auto &x = getPos().x;
+		auto &y = getPos().y;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) ||
-				sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		    sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			y -= d * speed;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		    sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			y += d * speed;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		    sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			x -= d * speed;
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) ||
-			sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		    sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			x += d * speed;
 
-		 x = fmax(0, fmin(x, 1000 - (16 * getScale())));
-		 y = fmax(1000-(80 * getScale()), fmin(y, 1000 - (16 * getScale())));
+		x = fmax(0, fmin(x, 1000 - (16 * getScale())));
+		y = fmax(1000 - (80 * getScale()),
+		         fmin(y, 1000 - (16 * getScale())));
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && state != BobState::Shooting) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
+		    state != BobState::Shooting) {
 			state = BobState::Shooting;
 			stateIdx = 0;
 
 			vec2 spawnPos = getPos() + getOffset();
-			spawnPos.y -= getTexture()->getSize().y * getScale() / 8;
+			spawnPos.y -=
+			    getTexture()->getSize().y * getScale() / 8;
 			spawnPos.y -= 4 * getScale();
 			spawnPos.x += 4 * getScale();
-			game->addEntity(new Projectile(game, spawnPos, vec2(0, -600), 180));
+			game->addEntity(
+			    new Projectile(game, spawnPos, vec2(0, -600), 180));
 		}
 	}
 
@@ -61,7 +65,8 @@ void MrBob::update(Game * game) {
 }
 
 vector<Hitbox> MrBob::getHitboxes() const {
-	return vector<Hitbox>({Hitbox(vec2(1*getScale(), 1*getScale()), vec2(14*getScale(), 15*getScale()))});
+	return vector<Hitbox>({Hitbox(vec2(1 * getScale(), 1 * getScale()),
+	                              vec2(14 * getScale(), 15 * getScale()))});
 }
 
 std::string MrBob::toString() const {

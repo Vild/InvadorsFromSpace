@@ -1,7 +1,6 @@
 #include <invador/hitbox.hpp>
 
-Hitbox::Hitbox(vec2 offset, vec2 size) : offset(offset), size(size) {
-}
+Hitbox::Hitbox(vec2 offset, vec2 size) : offset(offset), size(size) {}
 
 bool Hitbox::isHit(vec2 pos) {
 	pos -= offset;

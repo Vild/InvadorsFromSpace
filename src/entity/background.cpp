@@ -9,9 +9,10 @@
 
 #include <sys/stat.h>
 
-Background::Background(Game * game) : Entity(vec2(0, 0)), offset(0, 0) {
+Background::Background(Game *game) : Entity(vec2(0, 0)), offset(0, 0) {
 	shader = new sf::Shader();
-	shader->loadFromFile("res/shader/background.vert", "res/shader/background.frag");
+	shader->loadFromFile("res/shader/background.vert",
+	                     "res/shader/background.frag");
 }
 
 Background::~Background() {
@@ -19,7 +20,7 @@ Background::~Background() {
 }
 
 struct stat oldStat;
-void Background::render(Game * game) {
+void Background::render(Game *game) {
 	struct stat newStat;
 
 	stat("res/shader/background.frag", &newStat);
@@ -28,21 +29,25 @@ void Background::render(Game * game) {
 		std::cout << "Reloading shaders!" << std::endl;
 		delete shader;
 		shader = new sf::Shader();
-		shader->loadFromFile("res/shader/background.vert", "res/shader/background.frag");
+		shader->loadFromFile("res/shader/background.vert",
+		                     "res/shader/background.frag");
 	}
 
 	oldStat = newStat;
 
-	game->getTarget().setView(sf::View(sf::FloatRect(0, 0, game->getTarget().getSize().x, game->getTarget().getSize().y)));
-	block.setSize(sf::Vector2f(game->getTarget().getSize().x, game->getTarget().getSize().y));
+	game->getTarget().setView(
+	    sf::View(sf::FloatRect(0, 0, game->getTarget().getSize().x,
+	                           game->getTarget().getSize().y)));
+	block.setSize(sf::Vector2f(game->getTarget().getSize().x,
+	                           game->getTarget().getSize().y));
 
 	shader->setParameter("offset", offset.x, offset.y);
 	game->getTarget().draw(block, shader);
 }
 
-void Background::update(Game * game) {
-	//auto s = game->getTarget().getSize();
-	//auto d = game->getDelta()*100;
+void Background::update(Game *game) {
+	// auto s = game->getTarget().getSize();
+	// auto d = game->getDelta()*100;
 	auto t = game->getTime() * 100 / 8.0;
 	offset.x = t;
 	offset.y = t;
@@ -51,7 +56,8 @@ void Background::update(Game * game) {
 		std::cout << "Reloading shaders!" << std::endl;
 		delete shader;
 		shader = new sf::Shader();
-		shader->loadFromFile("res/shader/background.vert", "res/shader/background.frag");
+		shader->loadFromFile("res/shader/background.vert",
+		                     "res/shader/background.frag");
 	}
 }
 
