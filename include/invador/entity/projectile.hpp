@@ -17,6 +17,7 @@ public:
 private:
 	vec2 velocity;
 	double rotate;
+	double time;
 };
 
 #endif

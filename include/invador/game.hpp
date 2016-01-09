@@ -51,6 +51,20 @@ private:
 	sf::RectangleShape blockedViews[4];
 	GameState gameState;
 
+	sf::RectangleShape protectiveSphere;
+
+	sf::RectangleShape textBackground;
+	sf::Font font;
+
+	sf::Text introTitle;
+	sf::Text introText;
+
+	sf::Text lostTitle;
+	sf::Text lostText;
+
+	sf::Text wonTitle;
+	sf::Text wonText;
+
 	void recalcView();
 };
 

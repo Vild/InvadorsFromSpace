@@ -34,8 +34,7 @@ void MrBob::update(Game *game) {
 			x += d * speed;
 
 		x = fmax(0, fmin(x, 1000 - (16 * getScale())));
-		y = fmax(1000 - (80 * getScale()),
-		         fmin(y, 1000 - (16 * getScale())));
+		y = fmax(1000 - (80 * getScale()), fmin(y, 1000 - (16 * getScale())));
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) &&
 		    state != BobState::Shooting) {
@@ -43,12 +42,10 @@ void MrBob::update(Game *game) {
 			stateIdx = 0;
 
 			vec2 spawnPos = getPosRef() + getOffsetRef();
-			spawnPos.y -=
-			    getTexture()->getSize().y * getScale() / 8;
+			spawnPos.y -= getTexture()->getSize().y * getScale() / 8;
 			spawnPos.y -= 4 * getScale();
 			spawnPos.x += 4 * getScale();
-			game->addEntity(
-			    new Projectile(game, spawnPos, vec2(0, -600), 180));
+			game->addEntity( new Projectile(game, spawnPos, vec2(0, -600), 180));
 		}
 
 		if (state == BobState::Shooting && stateIdx >= 4) {

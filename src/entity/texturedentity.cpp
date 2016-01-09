@@ -6,6 +6,10 @@ TexturedEntity::TexturedEntity(vec2 pos, sf::Texture &texture, int textureGrid)
 	sprite.setTexture(texture);
 	sprite.setScale(sf::Vector2f(getScale(), getScale()));
 	setFrame(0);
+
+	sprite.setScale(sf::Vector2f(getScale(), getScale()));
+	vec2 p = getPosRef() + getOffsetRef();
+	sprite.setPosition(p.x, p.y);
 }
 
 TexturedEntity::~TexturedEntity() {}

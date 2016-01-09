@@ -8,7 +8,7 @@
 
 MissAlice::MissAlice(Game *game, vec2 pos, vec2 grid)
     : TexturedEntity(pos, game->getResources().getTexture(Textures::MissAlice), 4),
-      state(AliceState::Idle), stateIdx(0), grid(grid) {
+      state(AliceState::Idle), stateIdx(0), grid(grid), time(0) {
 	stateIdx = (rand() % 20);
 }
 
@@ -16,13 +16,13 @@ MissAlice::~MissAlice() {}
 
 void MissAlice::update(Game *game) {
 	if (game->getActive()) {
+		time += game->getDelta();
 		// const double speed = 600;
 		double d = game->getDelta();
 		stateIdx += d * 8;
 
-		getOffsetRef().x = sin(game->getTime() * 2) * 4 * getScale();
-		getOffsetRef().y =
-		    abs(sin(game->getTime() * 4) * 2 * getScale());
+		getOffsetRef().x = sin(time * 2) * 4 * getScale();
+		getOffsetRef().y = abs(sin(time * 4) * 2 * getScale());
 		getPosRef().y += d * 5;
 
 		if (getPosRef().y + getOffsetRef().y >= 1000 - (80 * getScale()))

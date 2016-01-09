@@ -22,6 +22,7 @@ private:
 	AliceState state;
 	double stateIdx;
 	vec2 grid;
+	double time;
 };
 
 #endif

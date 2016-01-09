@@ -6,13 +6,14 @@
 
 Projectile::Projectile(Game *game, vec2 pos, vec2 velocity, double rotate)
     : TexturedEntity(pos, game->getResources().getTexture(Textures::Projectile), 4),
-      velocity(velocity), rotate(rotate) {}
+      velocity(velocity), rotate(rotate), time(0) {}
 
 Projectile::~Projectile() {}
 
 void Projectile::update(Game *game) {
 	if (game->getActive()) {
-		setFrame((int)(game->getTime() * 20) % 4 + ((int)rotate / 90) * 4);
+		time += game->getDelta();
+		setFrame((int)(time * 20) % 4 + ((int)rotate / 90) * 4);
 		getPosRef() += velocity * game->getDelta();
 		if (getPosRef().y < (int)(getTexture()->getSize().y * getScale()) / -2 ||
 		    getPosRef().y > game->getTarget().getSize().y)
@@ -33,7 +34,7 @@ void Projectile::update(Game *game) {
 
 						if (pos + size >= myPos) {
 							if (pos <= myPos + mySize) {
-								std::cout  << "Projectile hit: " << e[i]->toString() << std::endl;
+								std::cout << "Projectile hit: " << e[i]->toString() << std::endl;
 								getDeadRef() = true;
 								e[i]->getDeadRef() = true;
 								if (dynamic_cast<MrBob *>( e[i]))
