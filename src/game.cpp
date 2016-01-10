@@ -58,7 +58,7 @@ Game::Game()
 	introTitle.setCharacterSize(50);
 	introTitle.setColor(sf::Color::Yellow);
 	introTitle.setStyle(sf::Text::Bold);
-	introTitle.setPosition(sf::Vector2f(1000 / 2 - introTitle.getGlobalBounds().width / 2, 32));
+	introTitle.setPosition(sf::Vector2f(1000 / 2 - introTitle.getGlobalBounds().width / 2, 100));
 
 	introText.setFont(font);
 	introText.setString(
@@ -82,7 +82,7 @@ Game::Game()
 	);
 	introText.setCharacterSize(40);
 	introText.setColor(sf::Color::White);
-	introText.setPosition(sf::Vector2f(1000 / 2 - introText.getGlobalBounds().width / 2, 32 + 50 * 2));
+	introText.setPosition(sf::Vector2f(1000 / 2 - introText.getGlobalBounds().width / 2, 100 + 50 * 2));
 
 	lostTitle.setFont(font);
 	lostTitle.setString("You lost to the attack :(");

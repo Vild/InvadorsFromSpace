@@ -7,7 +7,8 @@
 
 MrBob::MrBob(Game *game, vec2 pos)
     : TexturedEntity(pos, game->getResources().getTexture(Textures::MrBob), 4),
-      state(BobState::Idle), stateIdx(0) {}
+      state(BobState::Idle), stateIdx(0) {
+}
 
 MrBob::~MrBob() {}
 
@@ -45,7 +46,7 @@ void MrBob::update(Game *game) {
 			spawnPos.y -= getTexture()->getSize().y * getScale() / 8;
 			spawnPos.y -= 4 * getScale();
 			spawnPos.x += 4 * getScale();
-			game->addEntity( new Projectile(game, spawnPos, vec2(0, -600), 180));
+			game->addEntity(new Projectile(game, spawnPos, vec2(0, -600), 180));
 		}
 
 		if (state == BobState::Shooting && stateIdx >= 4) {

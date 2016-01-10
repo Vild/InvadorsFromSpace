@@ -6,7 +6,12 @@
 
 Projectile::Projectile(Game *game, vec2 pos, vec2 velocity, double rotate)
     : TexturedEntity(pos, game->getResources().getTexture(Textures::Projectile), 4),
-      velocity(velocity), rotate(rotate), time(0) {}
+      velocity(velocity), rotate(rotate), time(0) {
+	pew.setBuffer(game->getResources().getPewBuffer());
+	pew.setPitch((rotate == 0) ? 0.75 : 1);
+	pew.setVolume((rotate == 0) ? 10 : 100);
+	pew.play();
+}
 
 Projectile::~Projectile() {}
 
