@@ -3,9 +3,6 @@ lflags = -Wall -Werror  -pedantic -lsfml-window -lsfml-graphics -lsfml-system -l
 
 include cc.ninja
 
-rule gtag
-  command = gtags
-
 build obj/main.o: cxx src/main.cpp
 build obj/game.o: cxx src/game.cpp
 build obj/resources.o: cxx src/resources.cpp
@@ -30,8 +27,4 @@ build invador: link $
  obj/entity/mrbob.o $
  obj/entity/background.o
 
-
-build GPATH GRTAGS GTAGS: gtag invador
-
 default invador
-default GPATH

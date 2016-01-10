@@ -51,14 +51,18 @@
 * MrBob and MissAlice scale is now 3 instead of 5
 
 
+## 20/12 - 4h
+
+* Played around with adding a bloom shader. Was not working out
 
 
+## 05/01 - 4h
+
+* Added finalized gameplay
+* Added a intro, win and lose screen.
 
 
-MAKE ALOT OF DIARY!!!
+## 09/01 - 1h
 
-
-Add win screen
-Add lose screen
-Replay button
-Before game info stuff
+* Added a story on the intro screen
+* Added some shooting sounds

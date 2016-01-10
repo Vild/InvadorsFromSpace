@@ -78,6 +78,8 @@ Game::Game()
 		"\n"
 		"Good luck!\n"
 		"\n"
+		"Use the arrow keys or WASD to move and\n"
+		"spacebar to shoot\n"
 		"Press Enter to continue\n"
 	);
 	introText.setCharacterSize(40);
